@@ -51,6 +51,4 @@ public class RegistrationXpaths {
         public String RegistrationSuccessMessage(){
             return this.RegistrationFields = "//h3[contains(text(),'Registration Successful!')]";
         }
-
-
 }

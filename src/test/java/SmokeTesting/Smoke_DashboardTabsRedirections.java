@@ -11,18 +11,21 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import xpaths.DashboardTabsXpaths;
 import xpaths.Dashboard_ActivitiesActionItemsXpaths;
 import xpaths.LoginXpaths;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-public class Smoke_Dashboard_ActivitiesActionItems {
+public class Smoke_DashboardTabsRedirections {
+
     WebDriver driver;
     XSSFWorkbook workbook;
     XSSFSheet sheet;
@@ -31,6 +34,7 @@ public class Smoke_Dashboard_ActivitiesActionItems {
     String AutomationResultPassed = "Passed";
     String AutomationResultFailed = "Failed";
 
+    private static final DashboardTabsXpaths DashboardTabsLocators = new DashboardTabsXpaths();
     private static final Dashboard_ActivitiesActionItemsXpaths ActivitiesActionItemsLocators = new Dashboard_ActivitiesActionItemsXpaths();
     private static final LoginXpaths LoginLocators = new LoginXpaths();
 
@@ -43,9 +47,8 @@ public class Smoke_Dashboard_ActivitiesActionItems {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(9000, TimeUnit.SECONDS);
     }
-
     @Test(priority = 1)
-    public void Registration() throws IOException, InterruptedException {
+    public void DashboardTabsRedirections() throws IOException, InterruptedException {
         File src = new File("C:\\Users\\Gretchin\\Desktop\\Automation Stuffs\\CARBONETES" +
                 "\\DataDriven\\CarbonetesAutomatedSmokeTesting.xlsx");
         FileInputStream fis = new FileInputStream(src);
@@ -90,10 +93,37 @@ public class Smoke_Dashboard_ActivitiesActionItems {
             SignInBtn.click();
             Thread.sleep(4000);
 
-            if (DashboardTabSelected.contains("Activities & Action Items") || DashboardTabSelected.contains("Security Risks") || DashboardTabSelected.contains("Compliance & Governance") || DashboardTabSelected.contains("Asset Management")) {
-                //Go to Activities & Action Items tab
+            if (DashboardTabSelected.contains("Activities & Action Items") || DashboardTabSelected.contains("Security Risks") || DashboardTabSelected.contains("Compliance & Governance") || DashboardTabSelected.contains("Asset Management")){
+                //Go to Dashboard page
+                WebElement DashboardPage = driver.findElement(By.xpath(DashboardTabsLocators.DashboardPage()));
+                DashboardPage.click();
+                driver.manage().timeouts().implicitlyWait(9000, TimeUnit.SECONDS);
+                Thread.sleep(1000);
+
+                if (DashboardTabSelected.contains("Activities & Action Items")) {
+                    //Go to Activities & Action Items
+                    WebElement DashboardActivitiesActionItems = driver.findElement(By.xpath(DashboardTabsLocators.ActivitiesActionItemsTab()));
+                    DashboardActivitiesActionItems.click();
+                    driver.manage().timeouts().implicitlyWait(9000, TimeUnit.SECONDS);
+                    Thread.sleep(1000);
+
+
+                }
+                    // Saving details
+                    String DashboardActionableItemsLabel = driver.findElement(By.xpath(ActivitiesActionItemsLocators.ActionableItemsLabel())).getText();
+                    System.out.println(DashboardActionableItemsLabel);
+                    driver.manage().timeouts().implicitlyWait(9000, TimeUnit.SECONDS);
+                    Thread.sleep(2000);
+
+                    FileOutputStream fos = new FileOutputStream(src);
+                    sheet.getRow(i).createCell(3).setCellValue(AutomationResultPassed);
+                    sheet.getRow(i).createCell(4).setCellValue(DashboardActionableItemsLabel);
+                    sheet.getRow(i).createCell(5).setCellValue(currentDate);
+                    workbook.write(fos);
+                    fos.close();
+                }
+
             }
 
         }
     }
-}
