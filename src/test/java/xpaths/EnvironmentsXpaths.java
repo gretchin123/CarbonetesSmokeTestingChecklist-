@@ -14,4 +14,12 @@ public class EnvironmentsXpaths {
     public String SaveEnvironment() { return this.Environments = "//button[contains(text(),'Save')]"; }
     public String CancelEnvironment() { return this.Environments = "//a[contains(text(),'Cancel')]"; }
 
+    //Environments1
+
+    public String SearchText() { return this.Environments = "/html[1]/body[1]/div[2]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[2]/div[2]/div[2]/div[1]/div[1]/div[1]/input[1]"; }
+    public String SearchBtn() { return this.Environments = "//i[contains(text(),'search')]"; }
+    public String DeleteBtn() { return this.Environments = "//tbody/tr[1]/td[3]/a[2]/i[1]"; }
+    public String YesBtn() { return this.Environments = "//button[contains(text(),'Yes')]"; }
+
+
 }
