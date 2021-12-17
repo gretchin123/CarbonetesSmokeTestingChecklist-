@@ -32,7 +32,6 @@ public class Smoke_Environment {
     String filepath = "D:\\Automation\\Documents\\Carbonetes\\Carbo.xlsx";
 
     private static final EnvironmentsXpaths EnvironmentsLocators = new EnvironmentsXpaths();
-    private static final LoginXpaths SigninLocators = new LoginXpaths();
 
     @Test
 
