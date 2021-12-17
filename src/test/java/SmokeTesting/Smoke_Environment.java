@@ -14,12 +14,12 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import xpaths.EnvironmentsXpaths;
-import xpaths.SigninXpaths;
+import xpaths.LoginXpaths;
 import java.util.concurrent.TimeUnit;
 import Executor.AccessExecutor;
 
 
-public class Smoke_Environments {
+public class Smoke_Environment {
 
     WebDriver driver;
     XSSFWorkbook workbook;
@@ -32,7 +32,7 @@ public class Smoke_Environments {
     String filepath = "D:\\Automation\\Documents\\Carbonetes\\Carbo.xlsx";
 
     private static final EnvironmentsXpaths EnvironmentsLocators = new EnvironmentsXpaths();
-    private static final SigninXpaths SigninLocators = new SigninXpaths();
+    private static final LoginXpaths SigninLocators = new LoginXpaths();
 
     @Test
 
