@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="CarbonetesSmokeTestingChecklist" />
+        <module name="CarbonetesSmokeTestingChecklist-" />
       </profile>
     </annotationProcessing>
   </component>
