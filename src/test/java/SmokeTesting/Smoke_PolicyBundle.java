@@ -5,20 +5,19 @@ import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.Test;
+import xpaths.PolicyBundleXpaths;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import xpaths.EnvironmentsXpaths;
 import java.util.concurrent.TimeUnit;
 
-
-public class Smoke_Environment {
+public class Smoke_PolicyBundle {
 
     WebDriver driver;
     XSSFWorkbook workbook;
@@ -30,7 +29,7 @@ public class Smoke_Environment {
     String Message;
     String filepath = "D:\\Automation\\Documents\\Carbonetes\\CarbonetesAutomatedSmokeTesting.xlsx";
 
-    private static final EnvironmentsXpaths EnvironmentsLocators = new EnvironmentsXpaths();
+    private static final PolicyBundleXpaths PolicyBundleLocators = new PolicyBundleXpaths();
 
     @Test
 
@@ -43,18 +42,18 @@ public class Smoke_Environment {
         driver.manage().timeouts().implicitlyWait(9000, TimeUnit.SECONDS);
         String url = "https://tconsole.carbonetes.com/signin";
         driver.manage().window().maximize();
-        new AccessExecutor().SigninExecute(driver, url, "admin@hoolisoftware.com","!Carbonetes99");
+        new AccessExecutor().SigninExecute(driver, url, "admin@hoolisoftware.com", "!Carbonetes99");
 
-        WebElement elm = driver.findElement(By.xpath(EnvironmentsLocators.Policybundle()));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", elm);
+        WebElement Policy = driver.findElement(By.xpath(PolicyBundleLocators.PolicyBundle()));
+        Policy.click();
 
-        WebElement Envi = driver.findElement(By.xpath(EnvironmentsLocators.Environments()));
-        Envi.click();
+        WebElement Create = driver.findElement(By.xpath(PolicyBundleLocators.CreateBundle()));
+        Create.click();
 
         //Get data from excel
         FileInputStream fis = new FileInputStream(filepath);
         workbook = new XSSFWorkbook(fis);
-        sheet = workbook.getSheet("Environments");
+        sheet = workbook.getSheet("PolicyBundle");
 
         //Calling and Storing of data
         for (int i = 1; i <= sheet.getLastRowNum(); i++) {
@@ -69,26 +68,23 @@ public class Smoke_Environment {
             String scenariotype = dataformatter.formatCellValue(cell);
 
             //Start code
-            WebElement Addbtn = driver.findElement(By.xpath(EnvironmentsLocators.AddEnvironment()));
-            Addbtn.click();
-
-            WebElement inputName = driver.findElement(By.xpath(EnvironmentsLocators.NameEnvironment()));
+            WebElement inputName = driver.findElement(By.xpath(PolicyBundleLocators.PolicyName()));
             inputName.click();
             inputName.sendKeys(Name);
             Thread.sleep(3000);
 
-            WebElement inputDesc = driver.findElement(By.xpath(EnvironmentsLocators.DescriptionEnvi()));
+            WebElement inputDesc = driver.findElement(By.xpath(PolicyBundleLocators.PolicyDesc()));
             inputDesc.click();
             inputDesc.sendKeys(Description);
             Thread.sleep(3000);
 
-            WebElement Savebtn = driver.findElement(By.xpath(EnvironmentsLocators.SaveEnvironment()));
+            WebElement Savebtn = driver.findElement(By.xpath(PolicyBundleLocators.SavePolicy()));
             Savebtn.click();
             Thread.sleep(3000);
 
             if (scenariotype.contains("Empty") || scenariotype.contains("Invalid")) {
-                ErrorMessage = driver.findElement(By.xpath("//body[1]/div[7]/div[1]")).getText();
-                driver.findElement(By.xpath(EnvironmentsLocators.CancelEnvironment())).click();
+                ErrorMessage = driver.findElement(By.xpath(PolicyBundleLocators.ErrorMessage())).getText();
+                driver.findElement(By.xpath(PolicyBundleLocators.CancelPolicy())).click();
                 Thread.sleep(3000);
                 System.out.println(ErrorMessage);
                 String resultmessage = "Passed";
@@ -121,3 +117,4 @@ public class Smoke_Environment {
         driver.close();
     }
 }
+
