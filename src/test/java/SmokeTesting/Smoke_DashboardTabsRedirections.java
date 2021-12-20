@@ -33,6 +33,7 @@ public class Smoke_DashboardTabsRedirections {
     DataFormatter dataFormatter = new DataFormatter();
     String AutomationResultPassed = "Passed";
     String AutomationResultFailed = "Failed";
+    String Filepath = "C:\\Users\\Gretchin\\Desktop\\Automation Stuffs\\CARBONETES\\DataDriven\\CarbonetesAutomatedSmokeTesting.xlsx";
 
     private static final DashboardTabsXpaths DashboardTabsLocators = new DashboardTabsXpaths();
     private static final Dashboard_ActivitiesActionItemsXpaths ActivitiesActionItemsLocators = new Dashboard_ActivitiesActionItemsXpaths();
@@ -49,9 +50,8 @@ public class Smoke_DashboardTabsRedirections {
     }
     @Test(priority = 1)
     public void DashboardTabsRedirections() throws IOException, InterruptedException {
-        File src = new File("C:\\Users\\Gretchin\\Desktop\\Automation Stuffs\\CARBONETES" +
-                "\\DataDriven\\CarbonetesAutomatedSmokeTesting.xlsx");
-        FileInputStream fis = new FileInputStream(src);
+
+        FileInputStream fis = new FileInputStream(Filepath);
         workbook = new XSSFWorkbook(fis);
         sheet = workbook.getSheet("Dashboard");
 
