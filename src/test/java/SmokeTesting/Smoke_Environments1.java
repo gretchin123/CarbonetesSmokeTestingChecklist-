@@ -22,7 +22,7 @@ public class Smoke_Environments1 {
     XSSFCell cell;
     DataFormatter dataformatter = new DataFormatter();
     String SuccessMessage;
-    String filepath = "D:\\Automation\\Documents\\Carbonetes\\Carbo.xlsx";
+    String filepath = "D:\\Automation\\Documents\\Carbonetes\\CarbonetesAutomatedSmokeTesting.xlsx";
 
     private static final EnvironmentsXpaths EnvironmentsLocators = new EnvironmentsXpaths();
 

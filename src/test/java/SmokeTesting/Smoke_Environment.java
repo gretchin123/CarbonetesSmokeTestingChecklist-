@@ -28,7 +28,7 @@ public class Smoke_Environment {
     String ErrorMessage;
     String SuccessMessage;
     String Message;
-    String filepath = "D:\\Automation\\Documents\\Carbonetes\\Carbo.xlsx";
+    String filepath = "D:\\Automation\\Documents\\Carbonetes\\CarbonetesAutomatedSmokeTesting.xlsx";
 
     private static final EnvironmentsXpaths EnvironmentsLocators = new EnvironmentsXpaths();
 
