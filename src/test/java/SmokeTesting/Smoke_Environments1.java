@@ -34,9 +34,9 @@ public class Smoke_Environments1 {
         System.setProperty("webdriver.chrome.driver", "D:\\Automation\\Browsers\\chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
-        String url = "https://tconsole.carbonetes.com/signin";
+        String url = "https://console.carbonetes.com/signin";
         driver.manage().window().maximize();
-        new AccessExecutor().SigninExecute(driver, url, "admin@hoolisoftware.com","!Carbonetes99");
+        new AccessExecutor().SigninExecute(driver, url, "QACarboTesting@gmail.com","Carbonetes2021!");
 
         WebElement elm = driver.findElement(By.xpath(EnvironmentsLocators.Policybundle()));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", elm);
@@ -47,7 +47,7 @@ public class Smoke_Environments1 {
         //Get data from excel
         FileInputStream fis = new FileInputStream(filepath);
         workbook = new XSSFWorkbook(fis);
-        sheet = workbook.getSheet("Search");
+        sheet = workbook.getSheet("SearchEnvironment");
 
         //Calling and Storing of data
         for (int i = 1; i <= sheet.getLastRowNum(); i++) {
@@ -76,7 +76,6 @@ public class Smoke_Environments1 {
             Yesbtn.click();
             Thread.sleep(3000);
 
-
             if (scenariotype.contains("Valid")) {
                 SuccessMessage = driver.findElement(By.xpath("//body/div[7]/div[1]")).getText();
                 Searchtxt.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.BACK_SPACE));
@@ -87,7 +86,7 @@ public class Smoke_Environments1 {
                 sheet.getRow(i).createCell(3).setCellValue(SuccessMessage);
 
             }
-        }
+        }//End code
 
         FileOutputStream fos = new FileOutputStream(filepath);
         workbook.write(fos);

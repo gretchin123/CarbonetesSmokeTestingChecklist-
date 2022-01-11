@@ -4,8 +4,12 @@ public class ForgotPasswordXpaths {
 
     public String ForgotPassword;
 
-    public String ForgotBtn() { return this.ForgotPassword = "/html[1]/body[1]/div[2]/section[1]/div[1]/div[3]/div[2]/div[2]/form[1]/div[3]/div[1]/a[1]"; }
-    public String EmailTextField() { return this.ForgotPassword = "/html[1]/body[1]/div[2]/section[1]/div[1]/div[3]/div[3]/form[1]/div[1]/div[2]/div[1]/form[1]/div[1]/div[1]/div[1]/div[1]/input[1]"; }
+    public String ForgotBtn() { return this.ForgotPassword = "(//a[normalize-space()='Forgot password?'])[1]"; }
+    public String EmailTextField() { return this.ForgotPassword = "(//input[@aria-label='Email'])[2]"; }
     public String ResetBtn() { return this.ForgotPassword = "//span[contains(text(),'Reset')]"; }
+
+    //For Messages
+    public String ErrorMessage() { return this.ForgotPassword = "//div[contains(text(),'Username/E-mail must be valid')]"; }
+    public String SuccessMessage() { return this.ForgotPassword = "//body/div[7]/div[1]"; }
 
 }

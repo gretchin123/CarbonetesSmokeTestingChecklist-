@@ -37,7 +37,7 @@ public class Smoke_ForgotPassword {
         System.setProperty("webdriver.chrome.driver", "D:\\Automation\\Browsers\\chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(9000, TimeUnit.SECONDS);
-        driver.navigate().to("https://tconsole.carbonetes.com/signin");
+        driver.navigate().to("https://console.carbonetes.com/signin");
         driver.manage().window().maximize();
 
         WebElement Forgotbtn = driver.findElement(By.xpath(ForgotPasswordLocators.ForgotBtn()));
@@ -71,7 +71,7 @@ public class Smoke_ForgotPassword {
 
 
             if (scenariotype.contains("Invalid")) {
-                ErrorMessage = driver.findElement(By.xpath("//div[contains(text(),'Username/E-mail must be valid')]")).getText();
+                ErrorMessage = driver.findElement(By.xpath(ForgotPasswordLocators.ErrorMessage())).getText();
                 System.out.println(ErrorMessage);
                 Thread.sleep(3000);
                 String resultmessage = "Passed";
@@ -79,7 +79,7 @@ public class Smoke_ForgotPassword {
                 sheet.getRow(i).createCell(3).setCellValue(ErrorMessage);
 
             } else if (scenariotype.contains("Valid")) {
-                SuccessMessage = driver.findElement(By.xpath("//body/div[7]/div[1]")).getText();
+                SuccessMessage = driver.findElement(By.xpath(ForgotPasswordLocators.SuccessMessage())).getText();
                 System.out.println(SuccessMessage);
                 Thread.sleep(3000);
                 String resultmessage = "Passed";

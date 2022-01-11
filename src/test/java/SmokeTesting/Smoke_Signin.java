@@ -25,7 +25,7 @@ public class Smoke_Signin {
     String ErrorMessage;
     String filepath = "D:\\Automation\\Documents\\Carbonetes\\CarbonetesAutomatedSmokeTesting.xlsx";
 
-    private static final LoginXpaths SigninLocators = new LoginXpaths();
+    private static final LoginXpaths LoginLocators = new LoginXpaths();
 
 
     @Test
@@ -37,7 +37,7 @@ public class Smoke_Signin {
         System.setProperty("webdriver.chrome.driver", "D:\\Automation\\Browsers\\chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(9000, TimeUnit.SECONDS);
-        driver.navigate().to("https://tconsole.carbonetes.com/signin");
+        driver.navigate().to("https://console.carbonetes.com/signin");
         driver.manage().window().maximize();
 
         //Get data from excel
@@ -58,29 +58,28 @@ public class Smoke_Signin {
             String scenariotype = dataformatter.formatCellValue(cell);
 
             //Start code
-            WebElement inputUname = driver.findElement(By.xpath(SigninLocators.UsernameField()));
+            WebElement inputUname = driver.findElement(By.xpath(LoginLocators.UsernameField()));
             inputUname.click();
             inputUname.sendKeys(username);
             Thread.sleep(3000);
 
-            WebElement inputPassword = driver.findElement(By.xpath(SigninLocators.PasswordField()));
+            WebElement inputPassword = driver.findElement(By.xpath(LoginLocators.PasswordField()));
             inputPassword.click();
             inputPassword.sendKeys(password);
             Thread.sleep(3000);
 
-            WebElement Siginbtn = driver.findElement(By.xpath(SigninLocators.SignInBtn()));
+            WebElement Siginbtn = driver.findElement(By.xpath(LoginLocators.SignInBtn()));
             Siginbtn.click();
             Thread.sleep(3000);
 
             if (scenariotype.contains("Invalid")) {
-                ErrorMessage = driver.findElement(By.xpath("/html[1]/body[1]/div[2]/section[1]/div[1]/div[3]/div[2]/div[1]/div[1]/div[1]")).getText();
-                System.out.println(ErrorMessage);
+                ErrorMessage = driver.findElement(By.xpath(LoginLocators.ErrorMessage())).getText();
                 String resultmessage = "Passed";
                 sheet.getRow(i).createCell(3).setCellValue(resultmessage);
                 sheet.getRow(i).createCell(4).setCellValue(ErrorMessage);
 
             } else if (scenariotype.contains("Valid")) {
-                driver.findElement(By.xpath("//span[contains(text(),'Dashboard')]")).click();
+                driver.findElement(By.xpath(LoginLocators.SuccessMessage())).click();
                 Thread.sleep(3000);
                 String resultmessage = "Passed";
                 sheet.getRow(i).createCell(3).setCellValue(resultmessage);

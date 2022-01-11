@@ -41,9 +41,9 @@ public class Smoke_Environment {
         System.setProperty("webdriver.chrome.driver", "D:\\Automation\\Browsers\\chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(9000, TimeUnit.SECONDS);
-        String url = "https://tconsole.carbonetes.com/signin";
+        String url = "https://console.carbonetes.com/signin";
         driver.manage().window().maximize();
-        new AccessExecutor().SigninExecute(driver, url, "admin@hoolisoftware.com","!Carbonetes99");
+        new AccessExecutor().SigninExecute(driver, url, "QACarboTesting@gmail.com","Carbonetes2021!");
 
         WebElement elm = driver.findElement(By.xpath(EnvironmentsLocators.Policybundle()));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", elm);
@@ -90,7 +90,6 @@ public class Smoke_Environment {
                 ErrorMessage = driver.findElement(By.xpath("//body[1]/div[7]/div[1]")).getText();
                 driver.findElement(By.xpath(EnvironmentsLocators.CancelEnvironment())).click();
                 Thread.sleep(3000);
-                System.out.println(ErrorMessage);
                 String resultmessage = "Passed";
                 sheet.getRow(i).createCell(3).setCellValue(resultmessage);
                 sheet.getRow(i).createCell(4).setCellValue(ErrorMessage);
@@ -98,22 +97,20 @@ public class Smoke_Environment {
             } else if (scenariotype.contains("Valid")) {
                 SuccessMessage = driver.findElement(By.xpath("//body/div[7]/div[1]")).getText();
                 Thread.sleep(3000);
-                System.out.println(SuccessMessage);
                 String resultmessage = "Passed";
                 sheet.getRow(i).createCell(3).setCellValue(resultmessage);
                 sheet.getRow(i).createCell(4).setCellValue(SuccessMessage);
 
             } else if (scenariotype.contains("Duplicate")) {
                 Message = driver.findElement(By.xpath("//div[contains(text(),'The Environment Name is Already Used')]")).getText();
-                driver.findElement(By.xpath("//a[contains(text(),'Cancel')]")).click();
+                driver.findElement(By.xpath(EnvironmentsLocators.CancelEnvironment())).click();
                 Thread.sleep(3000);
-                System.out.println(Message);
                 String resultmessage = "Passed";
                 sheet.getRow(i).createCell(3).setCellValue(resultmessage);
                 sheet.getRow(i).createCell(4).setCellValue(Message);
 
             }
-        }
+        }//End code
 
         FileOutputStream fos = new FileOutputStream(filepath);
         workbook.write(fos);
