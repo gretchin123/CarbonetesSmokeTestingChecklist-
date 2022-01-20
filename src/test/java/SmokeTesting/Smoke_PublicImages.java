@@ -5,6 +5,7 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -38,7 +39,7 @@ public class Smoke_PublicImages {
         System.setProperty("webdriver.chrome.driver", "D:\\Automation\\Browsers\\chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(9000, TimeUnit.SECONDS);
-        driver.navigate().to("https://tconsole.carbonetes.com/public-analysis");
+        driver.navigate().to("https://console.carbonetes.com/public-analysis");
         driver.manage().window().maximize();
 
         //Get data from excel
@@ -65,15 +66,22 @@ public class Smoke_PublicImages {
             Analyzebtn.click();
             Thread.sleep(3000);
 
-            if (scenariotype.contains("Valid")) {
-                driver.findElement(By.xpath("/html[1]/body[1]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/div[1]/form[1]")).click();
+            if (scenariotype.contains("Invalid")) {
+                ErrorMessage = driver.findElement(By.xpath(PublicImageLocators.ErrorMessage())).getText();
+                inputImage.sendKeys(Keys.chord(Keys.CONTROL, "a", Keys.BACK_SPACE));
                 Thread.sleep(3000);
                 String resultmessage = "Passed";
                 sheet.getRow(i).createCell(2).setCellValue(resultmessage);
-                sheet.getRow(i).createCell(3).setCellValue("Successfully scan image");
+                sheet.getRow(i).createCell(3).setCellValue(ErrorMessage);
 
-            }//End code
-        }
+            } else if (scenariotype.contains("Valid")) {
+                driver.findElement(By.xpath(PublicImageLocators.SuccessMessage())).click();
+                Thread.sleep(3000);
+                String resultmessage = "Passed";
+                sheet.getRow(i).createCell(2).setCellValue(resultmessage);
+                sheet.getRow(i).createCell(3).setCellValue("Successfully Scanned");
+            }
+        }//End code
 
         FileOutputStream fos = new FileOutputStream(filepath);
         workbook.write(fos);

@@ -6,12 +6,12 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.Test;
 import xpaths.PolicyBundleXpaths;
-
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -25,7 +25,6 @@ public class Smoke_PolicyBundle {
     XSSFCell cell;
     DataFormatter dataformatter = new DataFormatter();
     String ErrorMessage;
-    String SuccessMessage;
     String Message;
     String filepath = "D:\\Automation\\Documents\\Carbonetes\\CarbonetesAutomatedSmokeTesting.xlsx";
 
@@ -40,15 +39,16 @@ public class Smoke_PolicyBundle {
         System.setProperty("webdriver.chrome.driver", "D:\\Automation\\Browsers\\chromedriver.exe");
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(9000, TimeUnit.SECONDS);
-        String url = "https://tconsole.carbonetes.com/signin";
+        String url = "https://console.carbonetes.com/signin";
         driver.manage().window().maximize();
-        new AccessExecutor().SigninExecute(driver, url, "admin@hoolisoftware.com", "!Carbonetes99");
+        new AccessExecutor().SigninExecute(driver, url, "QACarboTesting@gmail.com","Carbonetes2021!");
 
         WebElement Policy = driver.findElement(By.xpath(PolicyBundleLocators.PolicyBundle()));
         Policy.click();
 
         WebElement Create = driver.findElement(By.xpath(PolicyBundleLocators.CreateBundle()));
         Create.click();
+        Thread.sleep(3000);
 
         //Get data from excel
         FileInputStream fis = new FileInputStream(filepath);
@@ -59,7 +59,7 @@ public class Smoke_PolicyBundle {
         for (int i = 1; i <= sheet.getLastRowNum(); i++) {
 
             cell = sheet.getRow(i).getCell(0);
-            String Name = dataformatter.formatCellValue(cell);
+            String PolicyName = dataformatter.formatCellValue(cell);
 
             cell = sheet.getRow(i).getCell(1);
             String Description = dataformatter.formatCellValue(cell);
@@ -68,9 +68,12 @@ public class Smoke_PolicyBundle {
             String scenariotype = dataformatter.formatCellValue(cell);
 
             //Start code
+            WebElement elm = driver.findElement(By.xpath(PolicyBundleLocators.SavePolicy()));
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", elm);
+
             WebElement inputName = driver.findElement(By.xpath(PolicyBundleLocators.PolicyName()));
             inputName.click();
-            inputName.sendKeys(Name);
+            inputName.sendKeys(PolicyName);
             Thread.sleep(3000);
 
             WebElement inputDesc = driver.findElement(By.xpath(PolicyBundleLocators.PolicyDesc()));
@@ -86,30 +89,30 @@ public class Smoke_PolicyBundle {
                 ErrorMessage = driver.findElement(By.xpath(PolicyBundleLocators.ErrorMessage())).getText();
                 driver.findElement(By.xpath(PolicyBundleLocators.CancelPolicy())).click();
                 Thread.sleep(3000);
-                System.out.println(ErrorMessage);
                 String resultmessage = "Passed";
                 sheet.getRow(i).createCell(3).setCellValue(resultmessage);
                 sheet.getRow(i).createCell(4).setCellValue(ErrorMessage);
 
             } else if (scenariotype.contains("Valid")) {
-                SuccessMessage = driver.findElement(By.xpath("//body/div[7]/div[1]")).getText();
+                driver.findElement(By.xpath(PolicyBundleLocators.SuccessMessage())).click();
                 Thread.sleep(3000);
-                System.out.println(SuccessMessage);
+                driver.findElement(By.xpath(PolicyBundleLocators.ReturnPolicy())).click();
+                driver.findElement(By.xpath(PolicyBundleLocators.CreateBundle())).click();
                 String resultmessage = "Passed";
                 sheet.getRow(i).createCell(3).setCellValue(resultmessage);
-                sheet.getRow(i).createCell(4).setCellValue(SuccessMessage);
+                sheet.getRow(i).createCell(4).setCellValue("Successfully created");
 
             } else if (scenariotype.contains("Duplicate")) {
-                Message = driver.findElement(By.xpath("//div[contains(text(),'The Environment Name is Already Used')]")).getText();
-                driver.findElement(By.xpath("//a[contains(text(),'Cancel')]")).click();
-                Thread.sleep(3000);
-                System.out.println(Message);
+                Message = driver.findElement(By.xpath(PolicyBundleLocators.DuplicateMessage())).getText();
+                driver.navigate().back();
+                driver.findElement(By.xpath(PolicyBundleLocators.ReturnPolicy())).click();
+                 Thread.sleep(3000);
                 String resultmessage = "Passed";
                 sheet.getRow(i).createCell(3).setCellValue(resultmessage);
                 sheet.getRow(i).createCell(4).setCellValue(Message);
 
             }
-        }
+        }//End code
 
         FileOutputStream fos = new FileOutputStream(filepath);
         workbook.write(fos);
