@@ -10,10 +10,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
-import xpaths.DashboardTabsXpaths;
-import xpaths.Dashboard_ActivitiesActionItemsXpaths;
-import xpaths.Dashboard_SecurityRisksXpaths;
-import xpaths.LoginXpaths;
+import xpaths.*;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -41,6 +38,8 @@ public class Smoke_DashboardTabsRedirections {
     private static final DashboardTabsXpaths DashboardTabsLocators = new DashboardTabsXpaths();
     private static final Dashboard_ActivitiesActionItemsXpaths ActivitiesActionItemsLocators = new Dashboard_ActivitiesActionItemsXpaths();
     private static final Dashboard_SecurityRisksXpaths SecurityRisksLocators = new Dashboard_SecurityRisksXpaths();
+    private static final Dashboard_ComplianceGovernanceXpaths ComplianceGovernanceLocators = new Dashboard_ComplianceGovernanceXpaths();
+
 
     @BeforeTest
     public void initialization() throws InterruptedException {
@@ -49,11 +48,12 @@ public class Smoke_DashboardTabsRedirections {
         driver = new ChromeDriver();
         String url = "https://tconsole.carbonetes.com/signin";
         driver.manage().window().maximize();
-        new AccessExecutor().SigninExecute(driver, url, "admin@hoolisoftware.com","!Carbonetes99");
+        new AccessExecutor().SigninExecute(driver, url, "admin@hoolisoftware.com", "!Carbonetes99");
         driver.manage().timeouts().implicitlyWait(9000, TimeUnit.SECONDS);
     }
+
     @Test(priority = 1)
-    public void DashboardTabsRedirections() throws IOException, InterruptedException {
+    public void DashboardSmokeTesting() throws IOException, InterruptedException {
 
         FileInputStream fis = new FileInputStream(Filepath);
         workbook = new XSSFWorkbook(fis);
@@ -79,7 +79,7 @@ public class Smoke_DashboardTabsRedirections {
 
             //Start flow of the code
 
-            if (DashboardTabSelected.contains("Activities & Action Items") || DashboardTabSelected.contains("Security Risks") || DashboardTabSelected.contains("Asset Management")){
+            if (DashboardTabSelected.contains("Activities & Action Items") || DashboardTabSelected.contains("Security Risks") || DashboardTabSelected.contains("Compliance & Governance") || DashboardTabSelected.contains("Asset Management")) {
 
                 if (DashboardTabSelected.contains("Activities & Action Items")) {
                     //Go to Activities & Action Items
@@ -97,7 +97,7 @@ public class Smoke_DashboardTabsRedirections {
                     sheet.getRow(i).createCell(2).setCellValue(DashboardActionableItemsLabel);
                     sheet.getRow(i).createCell(3).setCellValue(currentDate);
 
-                    if(DashboardTabSelected.contains("Activities & Action Items: Date Range - This Month")){
+                    if (DashboardTabSelected.contains("Activities & Action Items: Date Range - This Month")) {
                         //To expand the Date Range Filter
                         WebElement ActivitiesActionItemsDateRange = driver.findElement(By.xpath(ActivitiesActionItemsLocators.DateRangeFilterDropdown()));
                         ActivitiesActionItemsDateRange.click();
@@ -115,8 +115,8 @@ public class Smoke_DashboardTabsRedirections {
                         sheet.getRow(i).createCell(1).setCellValue(AutomationResultPassed);
                         sheet.getRow(i).createCell(2).setCellValue(ThisMonthPolicyResultLabel);
                         sheet.getRow(i).createCell(3).setCellValue(currentDate);
-                    }
-                    else if(DashboardTabSelected.contains("Activities & Action Items: Date Range - This Week")){
+
+                    } else if (DashboardTabSelected.contains("Activities & Action Items: Date Range - This Week")) {
                         //To expand the Date Range Filter
                         WebElement ActivitiesActionItemsDateRange = driver.findElement(By.xpath(ActivitiesActionItemsLocators.DateRangeFilterDropdown()));
                         ActivitiesActionItemsDateRange.click();
@@ -132,8 +132,8 @@ public class Smoke_DashboardTabsRedirections {
                         sheet.getRow(i).createCell(1).setCellValue(AutomationResultPassed);
                         sheet.getRow(i).createCell(2).setCellValue(ThisWeekPolicyResultLabel);
                         sheet.getRow(i).createCell(3).setCellValue(currentDate);
-                    }
-                    else if(DashboardTabSelected.contains("Activities & Action Items: Date Range - Today")){
+
+                    } else if (DashboardTabSelected.contains("Activities & Action Items: Date Range - Today")) {
                         //To expand the Date Range Filter
                         WebElement ActivitiesActionItemsDateRange = driver.findElement(By.xpath(ActivitiesActionItemsLocators.DateRangeFilterDropdown()));
                         ActivitiesActionItemsDateRange.click();
@@ -149,8 +149,8 @@ public class Smoke_DashboardTabsRedirections {
                         sheet.getRow(i).createCell(1).setCellValue(AutomationResultPassed);
                         sheet.getRow(i).createCell(2).setCellValue(TodayPolicyResultLabel);
                         sheet.getRow(i).createCell(3).setCellValue(currentDate);
-                    }
-                    else if(DashboardTabSelected.contains("Activities & Action Items: Show User")){
+
+                    } else if (DashboardTabSelected.contains("Activities & Action Items: Show User")) {
                         //To click "Show User" filter
                         WebElement FilterShowUser = driver.findElement(By.cssSelector(ActivitiesActionItemsLocators.ShowUser()));
                         FilterShowUser.click();
@@ -163,8 +163,8 @@ public class Smoke_DashboardTabsRedirections {
                         sheet.getRow(i).createCell(1).setCellValue(AutomationResultPassed);
                         sheet.getRow(i).createCell(2).setCellValue(ActionableItemDisplayedShowUser);
                         sheet.getRow(i).createCell(3).setCellValue(currentDate);
-                    }
-                    else if(DashboardTabSelected.contains("Activities & Action Items: Show Teams")){
+
+                    } else if (DashboardTabSelected.contains("Activities & Action Items: Show Teams")) {
                         //To click "Show Teams" filter
                         WebElement FilterShowTeams = driver.findElement(By.xpath(ActivitiesActionItemsLocators.ShowTeams()));
                         FilterShowTeams.click();
@@ -177,8 +177,8 @@ public class Smoke_DashboardTabsRedirections {
                         sheet.getRow(i).createCell(1).setCellValue(AutomationResultPassed);
                         sheet.getRow(i).createCell(2).setCellValue(ActionableItemDisplayedShowTeams);
                         sheet.getRow(i).createCell(3).setCellValue(currentDate);
-                    }
-                    else if(DashboardTabSelected.contains("Activities & Action Items: Show Company")){
+
+                    } else if (DashboardTabSelected.contains("Activities & Action Items: Show Company")) {
                         //To click "Show Company" filter
                         WebElement FilterShowCompany = driver.findElement(By.xpath(ActivitiesActionItemsLocators.ShowCompany()));
                         FilterShowCompany.click();
@@ -191,8 +191,8 @@ public class Smoke_DashboardTabsRedirections {
                         sheet.getRow(i).createCell(1).setCellValue(AutomationResultPassed);
                         sheet.getRow(i).createCell(2).setCellValue(ActionableItemDisplayedShowCompany);
                         sheet.getRow(i).createCell(3).setCellValue(currentDate);
-                    }
-                    else if(DashboardTabSelected.contains("Activities & Action Items: Analyze Image")){
+
+                    } else if (DashboardTabSelected.contains("Activities & Action Items: Analyze Image")) {
                         //To analyze the image displayed in the actionable item
                         WebElement AnalyzeImage = driver.findElement(By.xpath(ActivitiesActionItemsLocators.AnalyzeImage()));
                         AnalyzeImage.click();
@@ -206,8 +206,8 @@ public class Smoke_DashboardTabsRedirections {
                         sheet.getRow(i).createCell(1).setCellValue(AutomationResultPassed);
                         sheet.getRow(i).createCell(2).setCellValue(CompleteAnalyzeMessage);
                         sheet.getRow(i).createCell(3).setCellValue(currentDate);
-                    }
-                    else if(DashboardTabSelected.contains("Activities & Action Items: Show Results")) {
+
+                    } else if (DashboardTabSelected.contains("Activities & Action Items: Show Results")) {
                         //View the result of the selected item
                         WebElement ShowResults = driver.findElement(By.xpath(ActivitiesActionItemsLocators.ShowResults()));
                         ShowResults.click();
@@ -223,8 +223,8 @@ public class Smoke_DashboardTabsRedirections {
                         sheet.getRow(i).createCell(3).setCellValue(currentDate);
 
                         driver.navigate().back();
-                    }
-                    else if(DashboardTabSelected.contains("Activities & Action Items: Modify JIRA Ticket")){
+
+                    } else if (DashboardTabSelected.contains("Activities & Action Items: Modify JIRA Ticket")) {
                         //Modify JIRA ticket under Date Range: Month
                         //To expand the Date Range Filter
                         WebElement ActivitiesActionItemsDateRange = driver.findElement(By.xpath(ActivitiesActionItemsLocators.DateRangeFilterDropdown()));
@@ -270,8 +270,8 @@ public class Smoke_DashboardTabsRedirections {
 
                         //to perform Scroll up on application using Selenium
                         js.executeScript("window.scrollBy(0,-350)", "JiraCompany");
-                    }
-                    else if(DashboardTabSelected.contains("Activities & Action Items: Validate JIRA Ticket redirection")){
+
+                    } else if (DashboardTabSelected.contains("Activities & Action Items: Validate JIRA Ticket redirection")) {
                         // Validate JIRA Ticket redirection
                         //To expand the Date Range Filter
                         WebElement ActivitiesActionItemsDateRange = driver.findElement(By.xpath(ActivitiesActionItemsLocators.DateRangeFilterDropdown()));
@@ -293,7 +293,7 @@ public class Smoke_DashboardTabsRedirections {
 
                         // hold all window handles in array list
                         ArrayList<String> newTb = new ArrayList<String>(driver.getWindowHandles());
-                        Set <String> set = driver.getWindowHandles();
+                        Set<String> set = driver.getWindowHandles();
 
                         //switch to new tab
                         driver.switchTo().window(newTb.get(1));
@@ -315,7 +315,7 @@ public class Smoke_DashboardTabsRedirections {
                         System.out.println("Page title of parent window: " + driver.getTitle());
                     }
                 }
-                if(DashboardTabSelected.contains("Security Risks")) {
+                if (DashboardTabSelected.contains("Security Risks")) {
                     //Go to Security Risks tab
                     WebElement DashboardSecurityRisksTab = driver.findElement(By.xpath(DashboardTabsLocators.SecurityRisksTab()));
                     DashboardSecurityRisksTab.click();
@@ -341,7 +341,7 @@ public class Smoke_DashboardTabsRedirections {
                         //To select a filter "This Month"
                         WebElement DateRangeMonth = driver.findElement(By.xpath(SecurityRisksLocators.DateRangeThisMonthFilter()));
                         DateRangeMonth.click();
-                        String ThisMonthVulnCriticalResultLabel = driver.findElement(By.xpath(SecurityRisksLocators.VunerabilitiesCriticalResult())).getText();
+                        String ThisMonthVulnCriticalResultLabel = driver.findElement(By.xpath(SecurityRisksLocators.VulnerabilitiesCriticalResult())).getText();
                         System.out.println(ThisMonthVulnCriticalResultLabel);
                         driver.manage().timeouts().implicitlyWait(9000, TimeUnit.SECONDS);
                         Thread.sleep(1000);
@@ -349,8 +349,8 @@ public class Smoke_DashboardTabsRedirections {
                         sheet.getRow(i).createCell(1).setCellValue(AutomationResultPassed);
                         sheet.getRow(i).createCell(2).setCellValue(ThisMonthVulnCriticalResultLabel);
                         sheet.getRow(i).createCell(3).setCellValue(currentDate);
-                    }
-                    else if(DashboardTabSelected.contains("Security Risks: Date Range -  This Week")){
+
+                    } else if (DashboardTabSelected.contains("Security Risks: Date Range -  This Week")) {
                         //To expand the Date Range Filter
                         WebElement SecurityRisksDateRange = driver.findElement(By.xpath(SecurityRisksLocators.DateRangeFilterDropdown()));
                         SecurityRisksDateRange.click();
@@ -358,17 +358,172 @@ public class Smoke_DashboardTabsRedirections {
                         //To select a filter "This Week"
                         WebElement DateRangeWeek = driver.findElement(By.xpath(SecurityRisksLocators.DateRangeThisWeekFilter()));
                         DateRangeWeek.click();
-                        String ThisWeekVulnCriticalResultLabel = driver.findElement(By.xpath(SecurityRisksLocators.VunerabilitiesCriticalResult())).getText();
-                        System.out.println(ThisWeekVulnCriticalResultLabel);
+                        String ThisWeekVulnHighResultLabel = driver.findElement(By.xpath(SecurityRisksLocators.VulnerbilitiesHighResult())).getText();
+                        System.out.println(ThisWeekVulnHighResultLabel);
                         driver.manage().timeouts().implicitlyWait(9000, TimeUnit.SECONDS);
                         Thread.sleep(1000);
 
                         sheet.getRow(i).createCell(1).setCellValue(AutomationResultPassed);
-                        sheet.getRow(i).createCell(2).setCellValue(ThisWeekVulnCriticalResultLabel);
+                        sheet.getRow(i).createCell(2).setCellValue(ThisWeekVulnHighResultLabel);
+                        sheet.getRow(i).createCell(3).setCellValue(currentDate);
+
+                    } else if (DashboardTabSelected.contains("Security Risks: Date Range - Today")) {
+                        //To expand the Date Range Filter
+                        WebElement SecurityRisksDateRange = driver.findElement(By.xpath(SecurityRisksLocators.DateRangeFilterDropdown()));
+                        SecurityRisksDateRange.click();
+
+                        //To select a filter "Today"
+                        WebElement DateRangeToday = driver.findElement(By.xpath(SecurityRisksLocators.DateRangeTodayFilter()));
+                        DateRangeToday.click();
+                        String ThisWeekVulnMediumResultLabel = driver.findElement(By.xpath(SecurityRisksLocators.VulnerabilitiesMediumResult())).getText();
+                        System.out.println(ThisWeekVulnMediumResultLabel);
+                        driver.manage().timeouts().implicitlyWait(9000, TimeUnit.SECONDS);
+                        Thread.sleep(1000);
+
+                        sheet.getRow(i).createCell(1).setCellValue(AutomationResultPassed);
+                        sheet.getRow(i).createCell(2).setCellValue(ThisWeekVulnMediumResultLabel);
+                        sheet.getRow(i).createCell(3).setCellValue(currentDate);
+
+                    } else if (DashboardTabSelected.contains("Security Risks: Show User")) {
+                        //To click "Show User" filter
+                        WebElement FilterShowUser = driver.findElement(By.cssSelector(SecurityRisksLocators.ShowUser()));
+                        FilterShowUser.click();
+
+                        //To get the Users displayed
+                        String SecurityRisksDisplayedUserLabel = driver.findElement(By.xpath(SecurityRisksLocators.SecurityRisksUsersLabel())).getText();
+                        driver.manage().timeouts().implicitlyWait(9000, TimeUnit.SECONDS);
+                        Thread.sleep(1000);
+
+                        sheet.getRow(i).createCell(1).setCellValue(AutomationResultPassed);
+                        sheet.getRow(i).createCell(2).setCellValue(SecurityRisksDisplayedUserLabel);
+                        sheet.getRow(i).createCell(3).setCellValue(currentDate);
+
+                    } else if (DashboardTabSelected.contains("Security Risks: Show Teams")) {
+                        //To click "Show Teams" filter
+                        WebElement FilterShowTeams = driver.findElement(By.xpath(SecurityRisksLocators.ShowTeams()));
+                        FilterShowTeams.click();
+
+                        //To get the Users displayed
+                        String SecurityRisksDisplayedUserLabel = driver.findElement(By.xpath(SecurityRisksLocators.SecurityRisksUsersLabel())).getText();
+                        driver.manage().timeouts().implicitlyWait(9000, TimeUnit.SECONDS);
+                        Thread.sleep(1000);
+
+                        sheet.getRow(i).createCell(1).setCellValue(AutomationResultPassed);
+                        sheet.getRow(i).createCell(2).setCellValue(SecurityRisksDisplayedUserLabel);
+                        sheet.getRow(i).createCell(3).setCellValue(currentDate);
+
+                    } else if (DashboardTabSelected.contains("Security Risks: Show Company")) {
+                        //To click "Show Company" filter
+                        WebElement FilterShowCompany = driver.findElement(By.xpath(SecurityRisksLocators.ShowCompany()));
+                        FilterShowCompany.click();
+
+                        //To get the Users displayed
+                        String SecurityRisksDisplayedUserLabel = driver.findElement(By.xpath(SecurityRisksLocators.SecurityRisksUsersLabel())).getText();
+                        driver.manage().timeouts().implicitlyWait(9000, TimeUnit.SECONDS);
+                        Thread.sleep(1000);
+
+                        sheet.getRow(i).createCell(1).setCellValue(AutomationResultPassed);
+                        sheet.getRow(i).createCell(2).setCellValue(SecurityRisksDisplayedUserLabel);
                         sheet.getRow(i).createCell(3).setCellValue(currentDate);
                     }
                 }
+                if (DashboardTabSelected.contains("Compliance & Governance")) {
+                    //Go to Compliance & Governance tab
+                    WebElement DashboardComplianceGovernanceTab = driver.findElement(By.xpath(DashboardTabsLocators.ComplianceGovernanceTab()));
+                    DashboardComplianceGovernanceTab.click();
+                    driver.manage().timeouts().implicitlyWait(9000, TimeUnit.SECONDS);
 
+                    // Saving details
+                    String DashboardComplianceGovernanceLabel = driver.findElement(By.xpath(ComplianceGovernanceLocators.ComplianceGovernance())).getText();
+                    System.out.println(DashboardComplianceGovernanceLabel);
+                    driver.manage().timeouts().implicitlyWait(9000, TimeUnit.SECONDS);
+                    Thread.sleep(1000);
+
+                    sheet.getRow(i).createCell(1).setCellValue(AutomationResultPassed);
+                    sheet.getRow(i).createCell(2).setCellValue(DashboardComplianceGovernanceLabel);
+                    sheet.getRow(i).createCell(3).setCellValue(currentDate);
+
+                    if (DashboardTabSelected.contains("Compliance & Governance: Compliance - Validate Policy Bundle Name redirection")) {
+                        //To redirect to a policy bundle
+                        WebElement PolicyBundleNameSort = driver.findElement(By.xpath(ComplianceGovernanceLocators.PolicyBundleNameSort()));
+                        PolicyBundleNameSort.click();
+                        driver.manage().timeouts().implicitlyWait(9000, TimeUnit.SECONDS);
+                        Thread.sleep(1000);
+
+                        WebElement clickPolicyBundleName = driver.findElement(By.xpath(ComplianceGovernanceLocators.PolicyBundleName()));
+                        clickPolicyBundleName.click();
+
+                        //To get the Policy Bundle Label
+                        String PolicyBundleLabel = driver.findElement(By.xpath(ComplianceGovernanceLocators.PolicyBundleLabel())).getText();
+                        System.out.println(PolicyBundleLabel);
+                        driver.manage().timeouts().implicitlyWait(9000, TimeUnit.SECONDS);
+                        Thread.sleep(1000);
+
+                        //Save details of the test execution
+                        sheet.getRow(i).createCell(1).setCellValue(AutomationResultPassed);
+                        sheet.getRow(i).createCell(2).setCellValue(PolicyBundleLabel);
+                        sheet.getRow(i).createCell(3).setCellValue(currentDate);
+
+                        driver.navigate().back();
+                    }
+                    else if (DashboardTabSelected.contains("Compliance & Governance: Compliance - Validate Sort and Governance Filters")) {
+                        //To click sort icons in the compliance table
+                        WebElement PolicyBundleNameSort = driver.findElement(By.xpath(ComplianceGovernanceLocators.PolicyBundleNameSort()));
+                        PolicyBundleNameSort.click();
+                        driver.manage().timeouts().implicitlyWait(9000, TimeUnit.SECONDS);
+                        Thread.sleep(1000);
+
+                        WebElement StatusSort = driver.findElement(By.xpath(ComplianceGovernanceLocators.StatusSort()));
+                        StatusSort.click();
+                        driver.manage().timeouts().implicitlyWait(9000, TimeUnit.SECONDS);
+                        Thread.sleep(1000);
+
+                        WebElement PolicyRulesSort = driver.findElement(By.xpath(ComplianceGovernanceLocators.PolicyRulesSort()));
+                        PolicyRulesSort.click();
+                        driver.manage().timeouts().implicitlyWait(9000, TimeUnit.SECONDS);
+                        Thread.sleep(1000);
+
+                        WebElement WhitelistCountSort = driver.findElement(By.xpath(ComplianceGovernanceLocators.WhitelistCountSort()));
+                        WhitelistCountSort.click();
+                        driver.manage().timeouts().implicitlyWait(9000, TimeUnit.SECONDS);
+                        Thread.sleep(1000);
+
+                        WebElement BlacklistCountSort = driver.findElement(By.xpath(ComplianceGovernanceLocators.BlacklistCountSort()));
+                        BlacklistCountSort.click();
+                        driver.manage().timeouts().implicitlyWait(9000, TimeUnit.SECONDS);
+                        Thread.sleep(1000);
+
+                        WebElement EvaluationsSort = driver.findElement(By.xpath(ComplianceGovernanceLocators.EvaluationsSort()));
+                        EvaluationsSort.click();
+                        driver.manage().timeouts().implicitlyWait(9000, TimeUnit.SECONDS);
+                        Thread.sleep(1000);
+
+                        WebElement GovernanceNoneFilter = driver.findElement(By.xpath(ComplianceGovernanceLocators.GovernanceNoneFilter()));
+                        GovernanceNoneFilter.click();
+                        driver.manage().timeouts().implicitlyWait(9000, TimeUnit.SECONDS);
+                        Thread.sleep(1000);
+
+                        //to perform Scroll down on application using Selenium
+                        js.executeScript("window.scrollBy(0,350)", "GovernanceNoneFilter");
+
+                        WebElement GovernanceUserFilter = driver.findElement(By.xpath(ComplianceGovernanceLocators.GovernanceUserFilter()));
+                        GovernanceUserFilter.click();
+                        driver.manage().timeouts().implicitlyWait(9000, TimeUnit.SECONDS);
+                        Thread.sleep(1000);
+
+                        WebElement GovernancePolicyBundleFilter = driver.findElement(By.xpath(ComplianceGovernanceLocators.GovernancePolicyBundleFilter()));
+                        GovernancePolicyBundleFilter.click();
+                        driver.manage().timeouts().implicitlyWait(9000, TimeUnit.SECONDS);
+                        Thread.sleep(1000);
+
+
+
+                        //To save details if the test execution passed.
+                        sheet.getRow(i).createCell(1).setCellValue(AutomationResultPassed);
+                        sheet.getRow(i).createCell(3).setCellValue(currentDate);
+
+                    }
+                }
             }
         }
         FileOutputStream fos = new FileOutputStream(Filepath);
