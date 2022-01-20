@@ -11,13 +11,15 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.Test;
-import xpaths.PolicyBundleXpaths;
+import xpaths.PolicyRuleXpaths;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-public class Smoke_PolicyBundle1 {
+public class Smoke_PolicyRule1 {
+
 
     WebDriver driver;
     XSSFWorkbook workbook;
@@ -28,7 +30,7 @@ public class Smoke_PolicyBundle1 {
     String Message;
     String filepath = "D:\\Automation\\Documents\\Carbonetes\\CarbonetesAutomatedSmokeTesting.xlsx";
 
-    private static final PolicyBundleXpaths PolicyBundleLocators = new PolicyBundleXpaths();
+    private static final PolicyRuleXpaths PolicyRuleLocators = new PolicyRuleXpaths();
 
     @Test
 
@@ -43,13 +45,16 @@ public class Smoke_PolicyBundle1 {
         driver.manage().window().maximize();
         new AccessExecutor().SigninExecute(driver, url, "admin@hoolisoftware.com", "!Carbonetes99");
 
-        WebElement Policy = driver.findElement(By.xpath(PolicyBundleLocators.PolicyBundle()));
+        WebElement Policy = driver.findElement(By.xpath(PolicyRuleLocators.PolicyBundle()));
         Policy.click();
+
+        WebElement EditBtn = driver.findElement(By.xpath(PolicyRuleLocators.EditBTN()));
+        EditBtn.click();
 
         //Get data from excel
         FileInputStream fis = new FileInputStream(filepath);
         workbook = new XSSFWorkbook(fis);
-        sheet = workbook.getSheet("SearchPolicy");
+        sheet = workbook.getSheet("SearchPolicyRule");
 
         //Calling and Storing of data
         for (int i = 1; i <= sheet.getLastRowNum(); i++) {

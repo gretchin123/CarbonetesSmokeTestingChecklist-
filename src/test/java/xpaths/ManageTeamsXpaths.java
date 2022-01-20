@@ -14,6 +14,7 @@ public class ManageTeamsXpaths {
     public String Description() { return this.ManageTeams = "//textarea[@aria-label='Description']" ;}
     public String TeamTag() { return this.ManageTeams = "//input[@aria-label='Team Tag']" ;}
     public String SearchName() { return this.ManageTeams = "//input[@aria-label='Search name']" ;}
+    public String Member() { return this.ManageTeams = "//label[contains(text(),'John Black)]" ;}
 
 
 }

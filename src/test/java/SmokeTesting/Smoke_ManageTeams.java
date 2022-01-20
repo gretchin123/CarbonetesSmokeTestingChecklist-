@@ -94,12 +94,12 @@ public class Smoke_ManageTeams {
             inputTeamTag.sendKeys(TeamTag);
             Thread.sleep(3000);
 
-            WebElement inputSearchName= driver.findElement(By.xpath(ManageTeamsLocators.SearchName()));
+            WebElement inputSearchName = driver.findElement(By.xpath(ManageTeamsLocators.SearchName()));
             inputSearchName.click();
             inputSearchName.sendKeys(SearchName);
             Thread.sleep(3000);
 
-            driver.findElement(By.xpath("//input[@aria-label='John Black']")).click();
+
         }
     }
 }
