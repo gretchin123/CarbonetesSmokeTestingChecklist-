@@ -38,7 +38,7 @@ public class Smoke_Registration {
         System.setProperty("webdriver.chrome.driver","C:\\Users\\Gretchin\\Desktop\\Automation Stuffs" +
                 "\\CARBONETES\\chromedriver_win32_96\\chromedriver.exe");
         driver = new ChromeDriver();
-        driver.get("https://tconsole.carbonetes.com/");
+        driver.get("https://console.carbonetes.com/");
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(9000, TimeUnit.SECONDS);
     }
